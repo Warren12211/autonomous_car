@@ -37,7 +37,11 @@ void motor_reset(){
 }
 
 void car_move(char direction1 = 'f', int duration = 0, int speed = 0, char direction2 = 'f', int duration2  = 0, int speed2 = 0) {
-  // If direction1 or direction2 is "f", turns wheel forward, and if "b", turns it backwards
+  /* If direction1 or direction2 is "f", turns wheel forward, and if "b", turns it backwards.
+  The max value for the speedcontrol variables are 1 to 100, 
+  but you can delete the map() function that does that if 
+  you want to use the original max value of 255 */
+
   if (direction1 == 'f') {
     digitalWrite(motor1_pin1, HIGH);
     digitalWrite(motor1_pin2, LOW);
@@ -56,10 +60,17 @@ void car_move(char direction1 = 'f', int duration = 0, int speed = 0, char direc
     digitalWrite(motor2_pin2, HIGH);
   }
 
+// You can delete this code block for original analog values of 0 to 255
+// Anything below 50 for speed control doesn't work very well with the motors
+  constrain(speedcontrol_1, 0, 100);
+  constrain(speedcontrol_1, 0, 255);
+  map(speedcontrol_1, 0, 100, 0, 255);
+  map(speedcontrol_2, 0, 100, 0, 255);
+
   analogWrite(speedcontrol_1, speed);
   analogWrite(speedcontrol_2, speed2);
   
-  delay(duration)
+  delay(duration);
 
   motor_reset();
 }
@@ -67,6 +78,5 @@ void car_move(char direction1 = 'f', int duration = 0, int speed = 0, char direc
 // Code Loop
 
 void loop(){
-  car_move('f', 1000, 255, 'b', 1000, 75);
-  delay(1000);
+  car_move('f', 1000, 50, 'f', 1000, 50);
 }
