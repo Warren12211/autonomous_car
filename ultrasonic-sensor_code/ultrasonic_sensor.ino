@@ -15,9 +15,9 @@ void reset_pins() {
 }
 
 void loop() {
-  // Ultrasonic sensors send out a 10 microsecond pulse at the speed of light
+  // Ultrasonic sensors send out a 10 microsecond pulse at the speed of sound
   // and the echo pin stays high until it receives that pulse back
-  // Using that value, we can determine how far way a solid object ike a wall is
+  // Using that value, we can determine how far way a solid object like a wall is
   // using the equation "speed * time"
   // We then divide that value by 2 because we only need half of the time since
   // the time that it takes the pulse to travel back is counted too
